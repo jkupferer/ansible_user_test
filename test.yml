@@ -17,3 +17,9 @@
   tasks:
   - debug:
       var: ansible_user
+  - command: echo "{{ ansible_user }}"
+  - command: echo "{{ ansible_user }}"
+    become: true
+  - command: echo "{{ item }}"
+    loop:
+    - "{{ ansible_user }}"
