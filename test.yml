@@ -3,18 +3,19 @@
   gather_facts: false
   tasks:
   - add_host:
-      name: bastion.rlc6c.sandbox1323.opentlc.com
+      name: bastion.l4rqh.sandbox894.opentlc.com
       groups: bastions
       ansible_user: ec2-user
       ansible_ssh_private_key_file: ~/.ssh/opentlc_admin_backdoor.pem
       ansible_ssh_extra_args: -o StrictHostKeyChecking=no
 
 - hosts: bastions
+  run_once: true
   gather_facts: false
   environment:
     KUBECONFIG: /home/{{ ansible_user }}/{{ cluster_name }}/auth/kubeconfig
   vars:
-    cluster_name: cluster-rlc6c
+    cluster_name: cluster-l4rqh
   tasks:
   - name: Set Ansible Python interpreter to k8s virtualenv
     set_fact:
