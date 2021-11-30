@@ -9,8 +9,13 @@
       ansible_ssh_private_key_file: ~/.ssh/opentlc_admin_backdoor.pem
       ansible_ssh_extra_args: -o StrictHostKeyChecking=no
 
+  - set_fact:
+      cluster_name: cluster-rlc6c
+
 - hosts: bastions
   gather_facts: false
+  environment:
+    KUBECONFIG: /home/{{ ansible_user }}/{{ cluster_name }}/auth/kubeconfig
   tasks:
   - name: Set Ansible Python interpreter to k8s virtualenv
     set_fact:
