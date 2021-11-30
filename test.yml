@@ -2,11 +2,8 @@
   connection: local
   gather_facts: false
   tasks:
-  - debug:
-      var: ansible_user
-
   - add_host:
-      name: bastion.c2cz2.sandbox755.opentlc.com
+      name: bastion.cvdbf.sandbox526.opentlc.com
       groups: bastions
       ansible_user: ec2-user
       ansible_ssh_private_key_file: ~/.ssh/opentlc_admin_backdoor.pem
@@ -15,11 +12,10 @@
 - hosts: bastions
   gather_facts: false
   tasks:
-  - debug:
-      var: ansible_user
-  - command: echo "{{ ansible_user }}"
-  - command: echo "{{ ansible_user }}"
-    become: true
-  - command: echo "{{ item }}"
-    loop:
-    - "{{ ansible_user }}"
+  - name: Ensure htpasswd Secret is absent
+    k8s:
+      state: absent
+      api_version: v1
+      kind: Secret
+      name: htpasswd-secret
+      namespace: openshift-config
