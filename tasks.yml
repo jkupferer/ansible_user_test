@@ -3,6 +3,8 @@
   set_fact:
     ansible_python_interpreter: /opt/virtualenvs/k8s/bin/python
 
+- kubernetes.core.helm:
+
 - name: Ensure htpasswd Secret is absent
   k8s:
     state: absent
