@@ -12,12 +12,11 @@
   - command: >-
       ansible-galaxy install
       -r {{ playbook_dir }}/r.yml
-      -p roles
 
   - command: >-
       ansible-galaxy collection install
       -r {{ playbook_dir }}/r.yml
-      -p collections
+      --force-with-deps
 
 - hosts: bastions
   run_once: true
