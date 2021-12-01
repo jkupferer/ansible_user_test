@@ -9,6 +9,14 @@
       ansible_ssh_private_key_file: ~/.ssh/opentlc_admin_backdoor.pem
       ansible_ssh_extra_args: -o StrictHostKeyChecking=no
 
+  - command: >-
+      ansible-galaxy install
+      -r {{ playbook_dir }}/r.yml
+
+  - command: >-
+      ansible-galaxy collection install
+      -r {{ playbook_dir }}/r.yml
+
 - hosts: bastions
   run_once: true
   gather_facts: false
@@ -17,14 +25,4 @@
   vars:
     cluster_name: cluster-9bt9l
   tasks:
-  - name: Set Ansible Python interpreter to k8s virtualenv
-    set_fact:
-      ansible_python_interpreter: /opt/virtualenvs/k8s/bin/python
-
-  - name: Ensure htpasswd Secret is absent
-    k8s:
-      state: absent
-      api_version: v1
-      kind: Secret
-      name: htpasswd-secret
-      namespace: openshift-config
+  - include_tasks: tasks.yml

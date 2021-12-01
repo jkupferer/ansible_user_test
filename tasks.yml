@@ -1,0 +1,12 @@
+---
+- name: Set Ansible Python interpreter to k8s virtualenv
+  set_fact:
+    ansible_python_interpreter: /opt/virtualenvs/k8s/bin/python
+
+- name: Ensure htpasswd Secret is absent
+  k8s:
+    state: absent
+    api_version: v1
+    kind: Secret
+    name: htpasswd-secret
+    namespace: openshift-config
