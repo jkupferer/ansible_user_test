@@ -16,6 +16,7 @@
   - command: >-
       ansible-galaxy collection install
       -r {{ playbook_dir }}/r.yml
+      -p collections
       --force-with-deps
 
 - hosts: bastions
